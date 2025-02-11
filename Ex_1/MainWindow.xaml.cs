@@ -30,20 +30,17 @@ namespace Ex_1
         // 마우스 이벤트 핸들러
         private static void MyMouseEvent(MouseEventTypes @event, int x, int y, MouseEventFlags flags, IntPtr userdata)
         {
-            OpenCvSharp.Point lastPoint;
 
             //  마우스 왼쪽 버튼 클릭
             if (@event == MouseEventTypes.LButtonDown)
             {
                 isDrawing = true;
-                lastPoint = new OpenCvSharp.Point(x, y);
                 DrawCircle(x, y);  
             }
             //  마우스 왼쪽 버튼 클릭 중 드래그
             else if (@event == MouseEventTypes.MouseMove && isDrawing)
             {
                 DrawCircle(x, y);
-                lastPoint = new OpenCvSharp.Point(x, y);
             }
             //  마우스 왼쪽 버튼 업
             else if (@event == MouseEventTypes.LButtonUp)
