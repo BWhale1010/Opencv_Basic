@@ -7,19 +7,21 @@ namespace Ex_1
     public partial class MainWindow : System.Windows.Window
     {
         private static bool isDrawing = false;
-        private static Mat canvas;
+        private static Mat image;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            // 흰색 배경 보드 생성
-            canvas = new Mat(new OpenCvSharp.Size(500, 500), MatType.CV_8UC3, new Scalar(255, 255, 255));
+            string imgPath = @"F:\\pepe.jpg";
+            image = Cv2.ImRead(imgPath);
 
-            Cv2.ImShow("white board", canvas);
+            Cv2.Resize(image, image, new OpenCvSharp.Size(500, 500), interpolation: InterpolationFlags.Linear); // 이미지 크기 조정
+
+            Cv2.ImShow("board", image);
 
             // 마우스 콜백 설정
-            Cv2.SetMouseCallback("white board", MyMouseEvent);
+            Cv2.SetMouseCallback("board", MyMouseEvent);
 
             Cv2.WaitKey();
             Cv2.DestroyAllWindows();
@@ -30,22 +32,22 @@ namespace Ex_1
         {
             OpenCvSharp.Point lastPoint;
 
+            //  마우스 왼쪽 버튼 클릭
             if (@event == MouseEventTypes.LButtonDown)
             {
-                // 마우스 왼쪽 버튼을 누르면 드로잉 시작
                 isDrawing = true;
                 lastPoint = new OpenCvSharp.Point(x, y);
-                DrawCircle(x, y);  // 클릭한 지점에도 원을 찍음
+                DrawCircle(x, y);  
             }
+            //  마우스 왼쪽 버튼 클릭 중 드래그
             else if (@event == MouseEventTypes.MouseMove && isDrawing)
             {
-                // 마우스를 움직이는 동안 원을 그리면서 선처럼 보이게 함
                 DrawCircle(x, y);
                 lastPoint = new OpenCvSharp.Point(x, y);
             }
+            //  마우스 왼쪽 버튼 업
             else if (@event == MouseEventTypes.LButtonUp)
             {
-                // 마우스 왼쪽 버튼을 놓으면 드로잉 종료
                 isDrawing = false;
             }
         }
@@ -53,14 +55,14 @@ namespace Ex_1
         // 원(점)을 그리는 함수
         private static void DrawCircle(int x, int y)
         {
-            int brushSize = 3;  // 원의 크기 (브러시 크기)
-            Scalar brushColor = Scalar.Black;  // 원의 색 (검정색)
+            int brushSize = 3;
+            Scalar brushColor = Scalar.Black;
 
             // 원 그리기
-            Cv2.Circle(canvas, new OpenCvSharp.Point(x, y), brushSize, brushColor, -1);  // -1은 채워진 원을 의미
+            Cv2.Circle(image, new OpenCvSharp.Point(x, y), brushSize, brushColor, -1);
 
             // 화면에 업데이트
-            Cv2.ImShow("white board", canvas);
+            Cv2.ImShow("board", image);
         }
     }
 }
