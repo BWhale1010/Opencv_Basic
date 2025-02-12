@@ -25,8 +25,7 @@ namespace Opencv_1
         public MainWindow()
         {
             InitializeComponent();
-            //string imgPath = "F:\\cat.jpg";
-            //Mat image = Cv2.ImRead(imgPath);
+
             // 새로운 이미지 생성
             Mat draw = new Mat(new OpenCvSharp.Size(640, 360), MatType.CV_8UC3, OpenCvSharp.Scalar.All(255));
 
