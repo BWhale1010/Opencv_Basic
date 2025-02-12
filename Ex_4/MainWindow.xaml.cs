@@ -56,7 +56,7 @@ namespace Ex_4
                     // 마우스 클릭 상태일 때, 마우스 위치에 빨간 원 그리기
                     if (isMousePressed)
                     {
-                        Cv2.Circle(frame, mousePosition, 10, new Scalar(0, 0, 255), -1); // 빨간색 원
+                        Cv2.Circle(frame, mousePosition, 100, new Scalar(0, 0, 255), 5); // 빨간색 원
                     }
 
                     Cv2.ImShow("Camera View", frame);
